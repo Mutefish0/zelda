@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shot : MonoBehaviour
-{
+public class Shot : MonoBehaviour {
   public float range;
   public float speed;
+
+  public int damge = 1;
+
+  public Health playerHealth;
+  public Signal healthSignal;
 
   private Rigidbody2D myRigidbody;
   private Animator animator;
@@ -15,8 +19,7 @@ public class Shot : MonoBehaviour
   private Transform playerTransform;
   Vector3 initialPos;
   // Start is called before the first frame update
-  void Start()
-  {
+  void Start() {
     initialPos = transform.position;
     animator = GetComponent<Animator>();
 
@@ -24,35 +27,33 @@ public class Shot : MonoBehaviour
   }
 
   // Update is called once per frame
-  void Update()
-  {
+  void Update() {
 
-    if (boomOnPlayer)
-    {
+    if (boomOnPlayer) {
       myRigidbody.MovePosition(playerTransform.position);
-    }
-    else if (Vector3.Distance(transform.position, initialPos) < range)
-    {
+    } else if (Vector3.Distance(transform.position, initialPos) < range) {
       myRigidbody.MovePosition(transform.position - transform.up * speed * Time.deltaTime);
-    }
-    else
-    {
+    } else {
       animator.SetBool("boom", true);
     }
   }
 
-  public void OnBoomCompleted()
-  {
+  public void OnBoomCompleted() {
     Destroy(gameObject);
   }
 
-  void OnTriggerEnter2D(Collider2D other)
-  {
-    if (other.CompareTag("Player"))
-    {
+  void OnTriggerEnter2D(Collider2D other) {
+    if (other.CompareTag("Player")) {
       boomOnPlayer = true;
       playerTransform = other.transform;
       animator.SetBool("boom", true);
+
+      if (other.gameObject.GetComponent<PlayerController>().hitBox == other) {
+        if (playerHealth.currentValue > 0) {
+          playerHealth.currentValue -= damge;
+          healthSignal.Raise("updateHealth", "");
+        }
+      }
     }
   }
 

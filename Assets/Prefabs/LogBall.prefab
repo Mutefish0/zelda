@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 708662207}
   m_Layer: 0
   m_Name: LogBall
-  m_TagString: Untagged
+  m_TagString: EnemyHit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,6 +142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 4
   speed: 4
+  damge: 1
+  playerHealth: {fileID: 11400000, guid: d0eb5173020024a36872adb73242573a, type: 2}
+  healthSignal: {fileID: 11400000, guid: ae6e96ca90bcf4859a10c8e898390ef0, type: 2}
 --- !u!50 &708662207
 Rigidbody2D:
   serializedVersion: 4

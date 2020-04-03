@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
   public float speed = 5;
+
   private Rigidbody2D myRigidbody;
   private Animator animator;
 
+  public BoxCollider2D hitBox;
+
   private bool isAttacking = false;
+
   // Start is called before the first frame update
   void Start() {
     myRigidbody = GetComponent<Rigidbody2D>();
